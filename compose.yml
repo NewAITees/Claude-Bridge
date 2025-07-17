@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  dev:
+    image: modern-python-base:latest
+    container_name: claude-bridge-dev
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - ~/.cache/uv:/home/dev/.cache/uv
+      - claude-bridge-config:/home/dev/.config
+      - claude-bridge-npm:/home/dev/.npm-global
+    ports:
+      - "8000:8000"
+      - "3000:3000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - UV_CACHE_DIR=/home/dev/.cache/uv
+      - UV_COMPILE_BYTECODE=1
+      - NPM_CONFIG_PREFIX=/home/dev/.npm-global
+      - PATH=/home/dev/.npm-global/bin:${PATH}
+    user: dev
+    command: tail -f /dev/null
+    stdin_open: true
+    tty: true
+
+volumes:
+  claude-bridge-config:
+  claude-bridge-npm:
