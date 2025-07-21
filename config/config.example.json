@@ -1,0 +1,24 @@
+{
+  "discord": {
+    "token": "YOUR_DISCORD_BOT_TOKEN",
+    "guild_id": "YOUR_GUILD_ID",
+    "channel_id": "YOUR_CHANNEL_ID"
+  },
+  "claude_code": {
+    "command": "claude-code",
+    "working_directory": "/workspace",
+    "timeout": 120
+  },
+  "session": {
+    "timeout": 3600,
+    "max_output_length": 1900,
+    "max_history_length": 100,
+    "cleanup_interval": 300
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "claude_bridge.log",
+    "max_size": "10MB",
+    "backup_count": 5
+  }
+}
