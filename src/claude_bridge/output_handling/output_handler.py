@@ -2,12 +2,15 @@
 Output Handler for Claude Bridge
 
 Handles formatting, ANSI escape sequence removal, and Discord message preparation.
+Updated to use new advanced processing components.
 """
 
 import re
 from typing import List
 import discord
 
+from .ansi_processor import ANSIProcessor
+from .discord_formatter import DiscordFormatter, MessageType
 from ..utils.logging_setup import get_logger
 
 logger = get_logger('output_handler')
@@ -29,7 +32,8 @@ class OutputHandler:
     ]
     
     def __init__(self):
-        pass
+        self.ansi_processor = ANSIProcessor()
+        self.discord_formatter = DiscordFormatter()
     
     @staticmethod
     def strip_ansi_sequences(text: str) -> str:
@@ -88,12 +92,12 @@ class OutputHandler:
         return '\n'.join(cleaned_lines)
     
     def format_for_discord(self, text: str) -> str:
-        """Format text for Discord display"""
+        """Format text for Discord display (legacy method - use discord_formatter for advanced features)"""
         if not text:
             return text
         
-        # Step 1: Remove ANSI sequences
-        cleaned = self.strip_ansi_sequences(text)
+        # Use the advanced ANSI processor
+        cleaned = self.ansi_processor.process_claude_output(text)
         
         # Step 2: Filter progress lines
         cleaned = self.filter_progress_lines(cleaned)
